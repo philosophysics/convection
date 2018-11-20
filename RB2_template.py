@@ -1,3 +1,9 @@
+
+
+
+
+
+
 # -*- coding:utf-8 -*-
 #
 # Convection 2D schema explicite
@@ -18,6 +24,12 @@ if 'qt' in plt.get_backend().lower():
     except ImportError:
         from PySide import QtGui
 
+        
+        
+        
+        
+        
+        
                  
 def CFL_advection():
     """
