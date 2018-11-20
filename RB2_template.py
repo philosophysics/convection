@@ -28,7 +28,7 @@ if 'qt' in plt.get_backend().lower():
         
         
         
-        
+         
         
                  
 def CFL_advection():
