@@ -41,8 +41,10 @@ def CFL_advection():
     dt_new = 0.8*min(dx/umax,dy/vmax)
 
     """
+    global u, v, dx, dy
+    
     precautionADV = 0.8
-    dt_cfa = ...
+    dt_cfa = precautionADV * min ( dx / np.abs ( u.max() ) , dx / np.abs ( v.max() ) ) 
 
     return dt_cfa
 
@@ -52,9 +54,11 @@ def CFL_explicite():
     en cas de schema explicite
   
     """
+    global dx, dy, DeltaU
+    
     precautionEXP = 0.3
     
-    dt_cfl = ...
+    dt_cfl = precautionEXP * ( dx**2 + dy**2 ) / DeltaU / 2
     return dt_cfl
 
 
@@ -67,14 +71,20 @@ def Advect():
     travaille bien sur le domaine reel [1:-1,1:-1]
 
     """ 
-    global Resu, Resv, Tadv 
+    global Resu, Resv, Tadv, dt
+    
+    sv = np.sign(Resv)
+    su = np.sign(Resu)
 
-   
+    a_1 = np.abs( ( np.sign(Resv) + Resv * dt ) * ( np.sign(Resu) + Resu * dt ) )
+    a_2 = np.abs( - ( np.sign(Resv) + Resv * dt ) * Resu * dt   )
+    a_3 = np.abs( Resv * Resu * dt**2  )
+    a_4 = np.abs( - ( np.sign(Resu) + Resu * dt ) * Resv * dt   )
 
     # Calcul des matrices de resultat 
     # pour les vitesses u et v
-    Resu[1:-1,1:-1] = ...
-    
+    Resu[1:-1,1:-1] = [ for i in range(1,len(Resu[1:-1,0])): for j in range range(1,len(Resu[0,1:-1])) : Resu[i,j] = a_1[i,j] * Resu[i,j] + a_2[i,j] * Resu[i,j - su[i,j]] + a_3[i,j] * Resu[i+sv[i,j],j-su[i,j]] a_4[i,j]*Resu[i+sv[i,j],j] ]
+    #lo so fa cagare.... domani chiediamo a Kris
     Resv[1:-1,1:-1] = ...
     # advection temperature
     Tadv[1:-1,1:-1] = ...
