@@ -41,10 +41,9 @@ def CFL_advection():
     dt_new = 0.8*min(dx/umax,dy/vmax)
 
     """
-    global u, v, dx, dy
-    
+    epsilon=0.01
     precautionADV = 0.8
-    dt_cfa = precautionADV * min ( dx / np.abs ( u.max() ) , dx / np.abs ( v.max() ) ) 
+    dt_cfa = precautionADV * min ( dx / np.abs ( u.max() +epsilon ) , dy / np.abs ( v.max()+epsilon ) ) 
 
     return dt_cfa
 
@@ -54,11 +53,10 @@ def CFL_explicite():
     en cas de schema explicite
   
     """
-    global dx, dy, DeltaU
     
     precautionEXP = 0.3
     
-    dt_cfl = precautionEXP * ( dx**2 + dy**2 ) / DeltaU / 2
+    dt_cfl = precautionEXP * ( np.min(dx**2,dy**2) ) / DeltaU / 2
     return dt_cfl
 
 
