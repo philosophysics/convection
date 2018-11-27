@@ -71,23 +71,23 @@ def Advect():
     travaille bien sur le domaine reel [1:-1,1:-1]
 
     """ 
-    global Resu, Resv, Tadv, dt
     
-    sv = np.sign(Resv)
-    su = np.sign(Resu)
+    Mx1=np.sign(-np.sign(v)+1)       #Matrix for the 4 directions of movement. Mx1=1 then move right, Mx1=0 for moving left 
+    Mx2=np.sign(1-Mx1)              #Mx2 left, My1 Up, My2 down
+    My1=np.sign(-np.sign(u)+1)  
+    My2=np.sign(1-My1)
+    
+    Ce=(abs(u*v)*dt**2)/(dx*dy)
+    Cc= 1-Ce              #we weigh moves with the areas opposite to the point (to make them weigh more the closer we are to them) given by udt and vdt displacements
+    Cud=(dx-abs(v)*dt)*abs(u)*dt/(dx*dy)
+    Clr=(dy-abs(u)*dt)*abs(v)*dt/(dx*dy)
+    
+    Resu[1:-1,1:-1]=Ce*(Mx1*My1*u[2:,2:]+Mx2*My2*u[-2:,-2:]+Mx1*My2*u[-2:,2:]+Mx2*My1*u[2:,-2:])+ Cc*u[1:-1,1:-1] + Cud*(My1*u[2:,1:-1]+My2*u[:-2,1:-1]) +Clr*(Mx1*u[1:-1,2:]+Mx2*u[1:-1,2:])   
+    Resv[1:-1,1:-1]=Ce*(Mx1*My1*v[2:,2:]+Mx2*My2*v[-2:,-2:]+Mx1*My2*v[-2:,2:]+Mx2*My1*v[2:,-2:])+ Cc*v[1:-1,1:-1] + Cud*(My1*v[2:,1:-1]+My2*v[:-2,1:-1]) +Clr*(Mx1*v[1:-1,2:]+Mx2*v[1:-1,2:])   
+    
+    Tadv[1:-1,1:-1]=Ce*(Mx1*My1*T[2:,2:]+Mx2*My2*T[-2:,-2:]+Mx1*My2*T[-2:,2:]+Mx2*My1*T[2:,-2:])+ Cc*T[1:-1,1:-1] + Cud*(My1*T[2:,1:-1]+My2*T[:-2,1:-1]) +Clr*(Mx1*T[1:-1,2:]+Mx2*T[1:-1,2:])   
+   
 
-    a_1 = np.abs( ( np.sign(Resv) + Resv * dt ) * ( np.sign(Resu) + Resu * dt ) )
-    a_2 = np.abs( - ( np.sign(Resv) + Resv * dt ) * Resu * dt   )
-    a_3 = np.abs( Resv * Resu * dt**2  )
-    a_4 = np.abs( - ( np.sign(Resu) + Resu * dt ) * Resv * dt   )
-
-    # Calcul des matrices de resultat 
-    # pour les vitesses u et v
-    Resu[1:-1,1:-1] = [ for i in range(1,len(Resu[1:-1,0])): for j in range range(1,len(Resu[0,1:-1])) : Resu[i,j] = a_1[i,j] * Resu[i,j] + a_2[i,j] * Resu[i,j - su[i,j]] + a_3[i,j] * Resu[i+sv[i,j],j-su[i,j]] a_4[i,j]*Resu[i+sv[i,j],j] ]
-    #lo so fa cagare.... domani chiediamo a Kris
-    Resv[1:-1,1:-1] = ...
-    # advection temperature
-    Tadv[1:-1,1:-1] = ...
 
 
 
