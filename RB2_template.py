@@ -209,7 +209,7 @@ def divergence(u,v):
     """
     tmp = np.empty((NY,NX))
     
-    tmp[1:-1,1:-1] = ...
+    tmp[1:-1,1:-1] = 1/(2*dx)*(u[1:-1,2:]-u[1:-1,:-2]) + 1/(2*dy)*(v[2:,1:-1]-v[:-2,1:-1])
         
     return tmp
 
@@ -221,8 +221,8 @@ def grad():
     """
     global gradphix, gradphiy
 
-    gradphix[:, 1:-1] = ...
-    gradphiy[1:-1, :] = ...
+    gradphix[:, 1:-1] = 1/(2*dx)*(phi[:,2:]-phi[:,:-2])
+    gradphiy[1:-1, :] = 1/(2*dy)*(phi[2:,:]-phi[:-2,:])
 
        
 ###
