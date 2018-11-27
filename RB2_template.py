@@ -198,7 +198,7 @@ def Laplacien(x):
     """
     rst = np.empty((NY,NX))
     
-    rst[1:-1,1:-1] = ... 
+    rst[1:-1,1:-1] = -4*x[1:-1,1:-1] + x[2:,1:-1] + x[:-2,1:-1] + x[1:-1,2:] + x[1:-1,:-2]
     return rst
 
 def divergence(u,v):
