@@ -229,13 +229,17 @@ def grad():
 def VelocityGhostPoints(u,v):
     # NO SLIP BC
     ### left
-    ...
+    u[0,:]=-u[2,:]
+    v[0,:]=-v[2,:]
     ### right      
-    ... 
+    u[-1,:]=-u[-3,:]
+    v[-1,:]=-v[-3,:]
     ### bottom     
-    ...
+    u[:,0]=-u[:,2]
+    v[:,0]=-v[:,2]
     ### top      
-    ... 
+    u[:,-1]=-u[:,-3]
+    v[:,-1]=-v[:,-]
 
 
 def TemperatureGhostPoints(T):
@@ -243,14 +247,16 @@ def TemperatureGhostPoints(T):
     global ==> pas de return 
 
     """
-    ### left               
-    ...
-    ### right              
-    ...
-    ### bottom
-    ...
-    ### top                
-    ...
+    T[0,:]=T[2,:]
+    ### right      
+    T[-1,:]=T[-3,:]
+   
+    ### bottom     
+    T[:,0]=T[:,2]
+ 
+    ### top      
+    T[:,-1]=T[:,-3]
+
         
 def PhiGhostPoints(phi):
     """
