@@ -265,15 +265,15 @@ def PhiGhostPoints(phi):
 
     global ==> pas de return 
 
-    """
-    ### left               
-    ...
-    ### right             
-    ...
-    ### bottom   
-    ...
-    ### top               
-    ...
+    phi[0,:]=-phi[2,:]
+    ### right      
+    phi[-1,:]=-phi[-3,:]
+   
+    ### bottom     
+    phi[:,0]=-phi[:,2]
+ 
+    ### top      
+    phi[:,-1]=-phi[:,-3]
 
 
 
