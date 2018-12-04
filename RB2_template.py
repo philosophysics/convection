@@ -115,16 +115,16 @@ def BuildLaPoisson():
     dataNXi = [np.ones(NXi), -2*np.ones(NXi), np.ones(NXi)]   
     
     ### Conditions aux limites : Neumann 
-    dataNXi[:,0]= [1,0,-1]  # SF left
-    dataNXi[:,-1]= [1,0,-1]   # SF right
+    dataNXi[2,1]= 2 # SF left
+    dataNXi[0,-2]= 2   # SF right
 
     ###### AXE Y
     ### Diagonal terms
     dataNYi = [np.ones(NYi), -2*np.ones(NYi), np.ones(NYi)] 
    
     ### Conditions aux limites : Neumann 
-    dataNYi[:,0]= [1,0,-1] # SF low
-    dataNYi[:,-1]= [1,0,-1]  # SF top
+    dataNYi[2,1]= 2 # SF low
+    dataNYi[0,-2]= 2  # SF top
 
     ###### Their positions
     offsets = np.array([-1,0,1])                    
