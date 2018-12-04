@@ -247,15 +247,16 @@ def TemperatureGhostPoints(T):
     global ==> pas de return 
 
     """
+    ### left
     T[0,:]=T[2,:]
     ### right      
     T[-1,:]=T[-3,:]
    
     ### bottom     
-    T[:,0]=T[:,2]
+    T[:,0]=-T[:,2]
  
     ### top      
-    T[:,-1]=T[:,-3]
+    T[:,-1]=-T[:,-3]
 
         
 def PhiGhostPoints(phi):
@@ -266,15 +267,15 @@ def PhiGhostPoints(phi):
     global ==> pas de return 
     """ 
     
-    phi[0,:]=-phi[2,:]
+    phi[0,:]=phi[2,:]
     ### right      
-    phi[-1,:]=-phi[-3,:]
+    phi[-1,:]=phi[-3,:]
    
     ### bottom     
-    phi[:,0]=-phi[:,2]
+    phi[:,0]=phi[:,2]
  
     ### top      
-    phi[:,-1]=-phi[:,-3]
+    phi[:,-1]=phi[:,-3]
 
 
 
@@ -421,27 +422,31 @@ for niter in xrange(nitermax):
 
     ###### Etape de diffusion
 
-    ustar = ...
-    vstar = ...
-    T     = ...
+    ustar = dt * ( 1 / Ra ) * Laplacien(u) + Resu
+    vstar = dt * ( 1 / Ra ) * Laplacien(v) + Resv
+    T     = dt * ( Laplacien(T) + v) + Tadv
 
     ###### Conditions aux limites Vitesse
     ###### on impose sur ustar/vstar Att:ghost points
     ### left
-    ... 
-    ### right
-    ...
-    ### top
-    ...
-    ### bottom
-    ... 
+    ustar[1,:]= np.zeros(Nx)
+    vstar[1,:]= np.zeros(Nx)
+    ### right      
+    ustar[-2,:]= np.zeros(Nx)
+    vstar[-2,:]= np.zeros(Nx)
+    ### bottom     
+    ustar[:,1]=np.zeros(Ny)
+    vstar[:,1]=np.zeros(Ny)
+    ### top      
+    ustar[:,-2]=np.zeros(Ny)
+    vstar[:,-2]=np.zeros(Ny)
         
     ###### Temperature B.C    
      
     ### bottom
-    ...
+    T[:,1]=np.zeros(Ny)
     ### top
-    ...
+    T[:,-2]=np.zeros(Ny)
 
     ###### END Conditions aux limites
 
@@ -467,8 +472,8 @@ for niter in xrange(nitermax):
 
     grad()
 
-    u = ...
-    v = ...
+    u = ustar - gradphix
+    v = vstar - gradphiy
 
     ###### Mise a jour des points fantomes
     ###### pour le champ de vitesse et T
