@@ -264,7 +264,8 @@ def PhiGhostPoints(phi):
     tjrs Neumann
 
     global ==> pas de return 
-
+    """ 
+    
     phi[0,:]=-phi[2,:]
     ### right      
     phi[-1,:]=-phi[-3,:]
